@@ -1,24 +1,14 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+```bash
+docker-compose -f docker-compose.dev.yml build
+docker-compose -f docker-compose.dev.yml up
+```
 
-Things you may want to cover:
+```bash
+docker-compose -f docker-compose.dev.yml exec app bundle exec rails db:create
+docker-compose -f docker-compose.dev.yml exec app bundle exec rails db:migrate
+```
 
-* Ruby version
+Open http://localhost:3000
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...

@@ -11,4 +11,3 @@ docker-compose -f docker-compose.dev.yml exec app bundle exec rails db:migrate
 ```
 
 Open http://localhost:3000
-

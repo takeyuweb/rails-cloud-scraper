@@ -36,5 +36,6 @@ ENTRYPOINT [ \
     "prehook", \
       "ruby -v",\
       "bundle -v", \
-      "bundle install"
+      "bundle install", \
+      "bin/yarn install", "--" \
       ]

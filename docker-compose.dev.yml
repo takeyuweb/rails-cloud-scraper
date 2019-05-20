@@ -13,12 +13,24 @@ services:
       - postgresql_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
+  webpack:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dev
+    user: ruby
+    command: ["bin/yarn", "start"]
+    environment:
+      BUNDLE_PATH: 'vendor/bundle'
+    volumes:
+      - .:/src
+    ports:
+      - 35729:35729
   app:
     build:
       context: .
       dockerfile: docker/Dockerfile.dev
     user: ruby
-    command: ["bundle", "exec", "rails", "s", "-p", "3000", "-b", "0.0.0.0"]
+    command: ["bin/rails", "s", "-p", "3000", "-b", "0.0.0.0"]
     environment:
       BUNDLE_PATH: 'vendor/bundle'
     volumes:
@@ -29,3 +41,4 @@ services:
     stdin_open: true
     depends_on:
       - db
+      - webpack

@@ -8,6 +8,8 @@ namespace :dev do
     subscription1 = topic.subscription("push-subscriber-1") || topic.subscribe("push-subscriber-1")
     subscription1.endpoint = "http://functions:8080"
 
+    topic.publish('https://takeyuweb.co.jp')
     topic.publish('https://takeyuweb.co.jp/work')
+    topic.publish('https://takeyuweb.co.jp/service')
   end
 end

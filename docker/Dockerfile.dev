@@ -3,6 +3,8 @@ FROM ruby:2.6.3
 ENV LANG C.UTF-8
 ENV ENTRYKIT_VERSION 0.4.0
 ENV BUNDLER_VERSION 2.0.1
+ENV WORKDIR /src
+ENV BUNDLE_PATH ${WORKDIR}/vendor/bundle
 
 RUN wget https://github.com/progrium/entrykit/releases/download/v${ENTRYKIT_VERSION}/entrykit_${ENTRYKIT_VERSION}_Linux_x86_64.tgz \
   && tar -xvzf entrykit_${ENTRYKIT_VERSION}_Linux_x86_64.tgz \
@@ -21,8 +23,8 @@ RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir /src
-WORKDIR /src
+RUN mkdir ${WORKDIR}
+WORKDIR ${WORKDIR}
 
 RUN gem install bundler:${BUNDLER_VERSION}
 

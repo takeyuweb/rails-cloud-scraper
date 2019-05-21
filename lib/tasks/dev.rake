@@ -8,8 +8,22 @@ namespace :dev do
     subscription1 = topic.subscription("push-subscriber-1") || topic.subscribe("push-subscriber-1")
     subscription1.endpoint = "http://functions:8080"
 
-    topic.publish('https://takeyuweb.co.jp')
-    topic.publish('https://takeyuweb.co.jp/work')
-    topic.publish('https://takeyuweb.co.jp/service')
+    topic.publish_async('https://takeyuweb.co.jp', id: 1) do |result|
+      raise "Failed to publish the message." unless result.succeeded?
+      puts "Message with custom attributes published asynchronously."
+    end
+
+    topic.publish_async('https://takeyuweb.co.jp/work', id: 2) do |result|
+      raise "Failed to publish the message." unless result.succeeded?
+      puts "Message with custom attributes published asynchronously."
+    end
+
+    topic.publish_async('https://takeyuweb.co.jp/service', id: 3) do |result|
+      raise "Failed to publish the message." unless result.succeeded?
+      puts "Message with custom attributes published asynchronously."
+    end
+
+    # Stop the async_publisher to send all queued messages immediately.
+    topic.async_publisher.stop.wait!
   end
 end

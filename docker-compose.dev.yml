@@ -29,6 +29,9 @@ services:
       dockerfile: docker/Dockerfile.dev
     user: ruby
     command: ["bin/rails", "s", "-p", "3000", "-b", "0.0.0.0"]
+    environment:
+      PUBSUB_EMULATOR_HOST: pubsub:8432
+      PUBSUB_PROJECT_ID: my-project-id
     volumes:
       - .:/src
     ports:
@@ -39,6 +42,7 @@ services:
       - db
       - webpack
       - functions
+      - pubsub
   functions:
     build:
       context: .
@@ -49,3 +53,10 @@ services:
       - functions_node_modules:/src/node_modules
     ports:
       - 8080:8080
+  pubsub:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.pubsub
+    command: ["gcloud", "beta", "emulators", "pubsub", "start", "--host-port=0.0.0.0:8432"]
+    ports:
+      - 8432:8432
